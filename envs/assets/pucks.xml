@@ -33,5 +33,7 @@
     <actuator>
         <motor joint="obj1_slidex" ctrlrange="-1 1" ctrllimited="true"/>
         <motor joint="obj1_slidey" ctrlrange="-1 1" ctrllimited="true"/>
+        <motor joint="obj2_slidex" ctrlrange="-1 1" ctrllimited="true"/>
+        <motor joint="obj2_slidey" ctrlrange="-1 1" ctrllimited="true"/>
     </actuator>
 </mujoco>

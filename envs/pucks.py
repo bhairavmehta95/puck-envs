@@ -13,7 +13,7 @@ class PucksEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         utils.EzPickle.__init__(self)
         self.reference_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                            'assets/pucks.xml')
-        mujoco_env.MujocoEnv.__init__(self, self.reference_path, frame_skip=1)
+        mujoco_env.MujocoEnv.__init__(self, self.reference_path, frame_skip=kwargs['frame_skip'])
 
         self.model.stat.extent = 10
 
@@ -27,13 +27,6 @@ class PucksEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         assert not done
         if self.viewer:
             self.viewer.update_sim(self.sim)
-
-    # TODO: I'm making an assumption here that 3 places after the comma are good enough, are they?
-    def _randomize_friction(self):
-        frictionloss = self.dimensions[0].current_value
-
-        for joint in self.object_joints:
-            joint.set('frictionloss', '{:3f}'.format(frictionloss))
 
     def step(self, action):
         reward = 0.0
@@ -59,5 +52,5 @@ class PucksEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def _get_obs(self):
         return np.concatenate([
             self.sim.data.qpos.flat,
-            self.sim.data.qvel.flat,
+            # self.sim.data.qvel.flat,
         ])
