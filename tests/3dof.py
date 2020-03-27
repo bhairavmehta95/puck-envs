@@ -35,15 +35,15 @@ action = [0.1, 0.0, 0, 0]
 while True:
     s_, r, d, _ = env.step(action)
     env.render()
-    i+=1
-    if i < 1000:
-        print(i, s_)
 
     # Simulates (effectively) elastic collisions 
     if not np.array_equal(s_[-2:], [0, 0]):
-        action = [0.0, 0.0, 0.1, 0]
+        action = [0.0, 0.0, 0.0, 0]
+    else:
+        action = [0.1, 0.0, 0, 0]
 
     if d: 
+        action = [0.1, 0.0, 0, 0]
         env.reset()
         env.render()
 
