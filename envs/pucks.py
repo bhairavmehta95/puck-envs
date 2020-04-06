@@ -23,6 +23,7 @@ class PucksEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         self.data = self.sim.data
         self.init_qpos = self.data.qpos.ravel().copy()
         self.init_qvel = self.data.qvel.ravel().copy()
+        self.init_qvel[0] = 0.1
         observation, _reward, done, _info = self.step(np.zeros(self.model.nu))
         assert not done
         if self.viewer:
@@ -45,6 +46,7 @@ class PucksEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def reset_model(self):
         qpos = self.init_qpos
         qvel = self.init_qvel
+        qvel[0] = 0.1
 
         self.set_state(qpos, qvel)
         return self._get_obs()
@@ -52,5 +54,5 @@ class PucksEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     def _get_obs(self):
         return np.concatenate([
             self.sim.data.qpos.flat,
-            # self.sim.data.qvel.flat,
+            self.sim.data.qvel.flat,
         ])
